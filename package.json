@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/qerogram/W-VAS/issues"
   },
-  "homepage": "https://github.com/qerogram/W-VAS#readme"
+  "homepage": "https://github.com/qerogram/W-VAS#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
