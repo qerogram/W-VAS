@@ -97,10 +97,14 @@
 		    		method: "POST",
 		    		data : { ip : $("#IP").val() },
 		    		dataType:'json',
-		    		success: function(result) {
-		    			if(result) alert("~");//$("#visit_count").text(result['data']);
+		    		success: function(res) {
+		    			if(res) {
+		    				if(res['result'] === "fail") alert("IP양식이 맞지 않습니다.");
+		    				else alert("스캔을 시작합니다.");
+		    			}
 		    		}
 		    	});
+		    	$("#IP").val("");
 		    });
 	    </script>
 	</body>

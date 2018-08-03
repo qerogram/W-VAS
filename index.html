@@ -98,6 +98,8 @@
 	    </div>
 	    
 	    <script src="assets/js/jquery-1.10.2.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+		<script src="assets/js/jquery.counterup.min.js"></script>
 	    <script src="assets/js/bootstrap.min.js"></script>
 		<script src="assets/materialize/js/materialize.min.js"></script>
 	    <script src="assets/js/jquery.metisMenu.js"></script>
@@ -108,15 +110,22 @@
 		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
 	    <script>
-	    	$.ajax({
-	    		url: "/visit_count",
-	    		method: "GET",
-	    		data : { },
-	    		dataType:'json',
-	    		success: function(result) {
-	    			if(result) $("#visit_count").text(result['visit_count']);
-	    		}
-	    	});
+	    	function load_count() {
+		    	$.ajax({
+		    		url: "/visit_count",
+		    		method: "GET",
+		    		data : { },
+		    		dataType:'json',
+		    		success: function(result) {
+		    			if(result) {
+		    				$("#visit_count").text(result['visit_count']);
+		    				$('#visit_count').counterUp();
+		    			}
+		    		}
+		    	});
+	    	}
+	    	load_count();
+	    	setInterval(load_count, 3000);
 	    </script>
 	</body>
 </html>

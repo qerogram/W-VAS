@@ -65,6 +65,7 @@
                 									<th class="center">IP</th>
                 									<th class="center">Vuln count</th>
                 									<th class="center">Security grade</th>
+                									<th class="center">Date</th>
                 								</tr>
                 							</thead>
                 							<tbody id="target_table">
@@ -92,18 +93,23 @@
 	    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 	    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 	    <script>
+	    	function pad(n, width) {
+  				n = n + '';
+  				return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+			}
 	    	$.ajax({
 	    		url: "/web_list",
 	    		method: "POST",
 	    		data : { },
 	    		dataType:'json',
 	    		success: function(result) {
-	    			var r = result['infor'];
-	    			for(var i = 0 ; i < r.length; ++i) {
+	    			var res = result['infor'];
+	    			for(var i = 0 ; i < res.length; ++i) {
 	    				var tr_color = '<tr class="gradeA odd">';
 	    				if(i%2) tr_color = '<tr class="gradeA even">';
-
-	    				document.getElementById("target_table").innerHTML+=tr_color+'<td class="center">'+r[i]['ip']+'</td><td class="center">'+r[i]['count']+'</td><td class="center">'+r[i]['grade']+"</td></tr>";
+	    				var date = new Date(res[i]['date']);
+	    				date = date.getFullYear() +'-'+ pad(date.getMonth()+1, 2) +'-' + pad(date.getDate(), 2);
+	    				document.getElementById("target_table").innerHTML+=tr_color+'<td class="center">'+res[i]['ip']+'</td><td class="center">'+res[i]['count']+'</td><td class="center">'+res[i]['grade']+'</td><td class="center">'+date+"</td></tr>";
 	    			}
 	    			$('#dataTables-example').dataTable();
 	    		}
