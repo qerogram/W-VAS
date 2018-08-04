@@ -69,16 +69,16 @@
 
             /* MORRIS DONUT CHART
 			----------------------------------------*/
-            Morris.Donut({
+            /*Morris.Donut({
                 element: 'morris-donut-chart',
                 data: [{
-                    label: "Profits",
+                    label: "URL",
                     value: 12
                 }, {
-                    label: "Users",
+                    label: "IP",
                     value: 30
                 }, {
-                    label: "Total Sales",
+                    label: "Visit",
                     value: 20
                 }],
 				   colors: [

@@ -56,10 +56,21 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="card">
-								<div class="card-action">Input Web Server IP</div>
+								<div class="card-action">Input Web Server IP or Domain</div>
                         		<div class="card-content">
     								<form class="col s12">
       									<div class="row">
+      										<div class="custom-control custom-radio">
+  												<input type="radio" class="custom-control-input" id="useIP" name="ConnType" value="ip" checked>
+												<label class="custom-control-label" for="useIP">IP 스캔</label>
+												<input type="radio" class="custom-control-input" id="useURL" name="ConnType" value="url">
+  												<label class="custom-control-label" for="useURL">URL 스캔</label>
+											</div>
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" id="useSSL" value="0" disabled>
+												<label class="form-check-label" for="useSSL">HTTPS</label>
+											</div>
+
       										<div class="input-field col s6">
       											<input id="IP" type="text">
       											<label for="IP">Server IP</label>
@@ -91,15 +102,25 @@
 		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
 	    <script>
+	    	$("#useURL").click(function() { $("#useSSL").attr('disabled',false); });
+	    	$("#useIP").click(function() { $("#useSSL").attr('disabled',true); $("#useSSL").attr('checked', false); $("#useSSL").val(0); });
+	    	$("#useSSL").click(function() { 
+	    		if($("#useSSL").val()==1) $("#useSSL").val(0);
+	    		else $("#useSSL").val(1); 
+	    	});
 	    	$("#scan").click(function(){
 		    	$.ajax({
 		    		url: "/req_scan",
 		    		method: "POST",
-		    		data : { ip : $("#IP").val() },
+		    		data : { 
+		    			type : $(":input:radio[name=ConnType]:checked").val(),
+		    			ssl : $("#useSSL").val(),
+		    			ip : $("#IP").val() 
+		    		},
 		    		dataType:'json',
 		    		success: function(res) {
 		    			if(res) {
-		    				if(res['result'] === "fail") alert("IP양식이 맞지 않습니다.");
+		    				if(res['result'] === "fail") alert("서식이 맞지 않습니다.");
 		    				else alert("스캔을 시작합니다.");
 		    			}
 		    		}

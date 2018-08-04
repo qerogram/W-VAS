@@ -70,6 +70,7 @@
 						</div>
 					</div>
 					<div class="row">
+
 						<div class="col-xs-12 col-sm-12 col-md-5"> 
 							<div class="row">
 								<div class="col-xs-12"> 
@@ -126,6 +127,35 @@
 	    	}
 	    	load_count();
 	    	setInterval(load_count, 3000);
+	    	$.ajax({
+	    		url : "/load_infor",
+	    		method : "GET",
+	    		data : { },
+	    		dataType : 'json',
+	    		success : function(result) {
+	    			if(result) {
+	    				Morris.Donut({
+			                element: 'morris-donut-chart',
+			                data: [{
+			                    label: "URL",
+			                    value: result['url_count']
+			                }, {
+			                    label: "IP",
+			                    value: result['ip_count']
+			                }, {
+			                    label: "Total",
+			                    value: result['total']
+			                }],
+							   colors: [
+			    				'#A6A6A6','#414e63',
+			    				'#e96562' 
+			  				],
+			                resize: true
+			            });
+	    			}
+	    		}
+	    	});
+	    	
 	    </script>
 	</body>
 </html>

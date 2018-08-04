@@ -3,6 +3,7 @@ var app = express();
 var Client = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var http = require('http');
+var https = require('https');
 
 app.use('/assets',express.static(__dirname+'/assets'));
 app.use(bodyParser.json());
@@ -29,19 +30,26 @@ app.post('/web_list', function(req, res){
    Client.connect('mongodb://localhost:27017/wvas', function(error, db){
         if(error) console.log(error);
         else {
-            var _cnt = 1
-            var dbs = db.collection('client');
-            dbs.count({}, function(err, cnt) {
-                if(!err) _cnt = cnt;
-            });
-            
-            
-            dbs.find({}, {}).toArray(function(err, result) {
+            db.collection('client').find({}, {}).toArray(function(err, result) {
                 if(err) throw err;
                 for(var i = 0; result[i] != null; ++i)  {
                     var temp = 0;
                     for(var j = 0; j<10; ++j) if(result[i]['result'][j]!=0) temp+=1;
                     result[i]['count'] = temp;
+                    
+                    switch(temp) {
+                        case 0 : result[i]['grade']='A'; break;
+                        case 1 :
+                        case 2 :
+                        case 3 : result[i]['grade']='B'; break;
+                        case 4 :
+                        case 5 : result[i]['grade']='C'; break;
+                        case 6 : 
+                        case 7 :
+                        case 8 : result[i]['grade']='D'; break;
+                        case 9 :
+                        case 10 : result[i]['grade']='F'; break;
+                    }
                 }
                 res.send({infor : result});
             });
@@ -66,6 +74,7 @@ app.get('/visit_count', function(req, res) {
             });
             db.close();
         }
+        
     });
 });
 
@@ -87,16 +96,27 @@ function handleResponse(response) {
 
 app.post('/req_scan', function (req, res) {
     var ip = req.body.ip;
-    var re = /\d{1,3}[.]\d{1,3}[.]\d{1,3}[.]\d{1,3}/;
-    if(re.test(ip) && ip.length <= 16) {
+    var re = /^(1|2)?\d?\d([.](1|2)?\d?\d){3}$/;
+    var ssl = req.body.ssl;
+    if(req.body.type=='url') {
+        re = /^(http\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+        if(ssl == 1) re = /^(https\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+    }
+    ip = ip.replace(/(^\w+:|^)\/\//, '');
+    console.log(re);
+    if(re.test(ip)) {
         var options = {
             hostname: ip,
             port: 80,
             path: '/'
         };
-        
-        
-        http.request(options, function(response){
+        sw = http;
+        if(ssl == 1) {
+            options['port'] = 443;
+            sw = https;
+        }
+
+        sw.request(options, function(response){
             handleResponse(response);
             Client.connect('mongodb://localhost:27017/wvas', function(error, db) {
                 if(error) console.log(error);
@@ -118,6 +138,27 @@ app.post('/req_scan', function (req, res) {
 app.get('/scanner', function (req, res) {
   res.sendFile(__dirname+"/scanner.html");
 });
+
+app.get('/load_infor', function(req, res) {
+     Client.connect('mongodb://localhost:27017/wvas', function(error, db){
+        if(error) console.log(error);
+        else {         
+            var url_count = 0;
+            var ip_count = 0;
+            db.collection('client').find({}, {}).toArray(function(err, result) {
+                if(err) throw err;
+                for(var i = 0; result[i] != null; ++i)  {
+                    re = /^(http\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+                    if(re.test("http://"+result[i]['ip'])) url_count++;
+                    else ip_count++;
+                }
+                total = url_count+ip_count;
+                res.send({"url_count" : url_count, "ip_count" : ip_count, "total":total});
+            });
+            db.close();
+        }
+    }); 
+})
 
 app.listen(8080, function () {
   console.log('Server Start');
