@@ -59,19 +59,24 @@ app.post('/web_list', function(req, res){
     }); 
 });
 
-app.get('/visit_count', function(req, res) {
+app.get('/load_main', function(req, res) {
     Client.connect('mongodb://localhost:27017/wvas', function(error, db){
         if(error) console.log(error);
         else {
             var query = {type:'count', name:"visit"};
             var cursor = db.collection('server').find(query);
+            var visit = 0;
             cursor.each(function(err,doc){
                 if(!err) {
                     if(doc != null){
-                        res.send({result:true, visit_count:doc['value']});
+                        visit = doc['value'];
                     }
                 }
             });
+            db.collection('client').find({},{}).count(
+                function(err, total) {
+                    res.send({result:true, visit:visit, total:total});
+                });
             db.close();
         }
         

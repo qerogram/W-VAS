@@ -73,7 +73,7 @@
 
       										<div class="input-field col s6">
       											<input id="IP" type="text">
-      											<label for="IP">Server IP</label>
+      											<label for="IP" id="inputType">Server IP</label>
         									</div>
 
         									<div class="input-field col s6">
@@ -102,12 +102,19 @@
 		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
 	    <script>
-	    	$("#useURL").click(function() { $("#useSSL").attr('disabled',false); });
-	    	$("#useIP").click(function() { $("#useSSL").attr('disabled',true); $("#useSSL").attr('checked', false); $("#useSSL").val(0); });
+	    	$("#useURL").click(function() { $("#useSSL").attr('disabled',false); $("#inputType").text("Server URL(http://www.test.com)");});
+	    	$("#useIP").click(function() { $("#useSSL").attr('disabled',true); $("#useSSL").attr('checked', false); $("#useSSL").val(0); $("#inputType").text("Server IP");});
 	    	$("#useSSL").click(function() { 
-	    		if($("#useSSL").val()==1) $("#useSSL").val(0);
-	    		else $("#useSSL").val(1); 
+	    		if($("#useSSL").val()==1) {
+	    			$("#useSSL").val(0);
+	    			$("#inputType").text("Server URL(http://www.test.com)");
+	    		}
+	    		else {
+	    			$("#useSSL").val(1); 
+	    			$("#inputType").text("Server URL(https://www.test.com)");
+	    		}
 	    	});
+
 	    	$("#scan").click(function(){
 		    	$.ajax({
 		    		url: "/req_scan",
