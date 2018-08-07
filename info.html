@@ -48,8 +48,8 @@
 				<div class="header"> 
 					<h1 class="page-header">Information</h1>
 					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li>List</li>
+						<li><a href="../">Home</a></li>
+						<li><a href="../list">List</a></li>
 						<li class="active">Information</li>
 					</ol>
 				</div>
@@ -82,26 +82,17 @@
 	            </div>
 	        </div>
 	    </div>
+	    
 	    <script src="assets/js/jquery-1.10.2.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/materialize/js/materialize.min.js"></script>
-	    <script src="assets/js/jquery.metisMenu.js"></script>
-	    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-	    <script src="assets/js/morris/morris.js"></script>
-		<script src="assets/js/easypiechart.js"></script>
-		<script src="assets/js/easypiechart-data.js"></script>
-		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
-	    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-	    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 	    <script>
-
 	    	function pad(n, width) {
   				n = n + '';
   				return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 			}
 			
-	    	var vuln_list = ["Directory Listing", "File Download", "민감 정보 노출", "-", "-", "-", "-", "-", "-", "-"];
+	    	var vuln_list = ["File Download", "Directory Listing", "민감 정보 노출", "관리자 페이지 노출", "input 태그 문자열 길이 체크를 하지 않는가?"];
 	    	$.ajax({
 	    		url: "/load_target_info",
 	    		method: "GET",

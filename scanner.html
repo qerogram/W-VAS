@@ -3,7 +3,7 @@
 	<head>
 	    <meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	    <title>W-VAS</title> 
+	    <title>W-VAS Scanner</title> 
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="assets/materialize/css/materialize.min.css" media="screen,projection" />
 	    <link href="assets/css/bootstrap.css" rel="stylesheet" />
@@ -48,7 +48,7 @@
 				<div class="header"> 
 					<h1 class="page-header">Scanner</h1>
 					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
+						<li><a href="../">Home</a></li>
 						<li class="active">Scanner</li>
 					</ol>
 				</div>
@@ -93,13 +93,6 @@
 	    </div>
 	    <script src="assets/js/jquery-1.10.2.js"></script>
 	    <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/materialize/js/materialize.min.js"></script>
-	    <script src="assets/js/jquery.metisMenu.js"></script>
-	    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-	    <script src="assets/js/morris/morris.js"></script>
-		<script src="assets/js/easypiechart.js"></script>
-		<script src="assets/js/easypiechart-data.js"></script>
-		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
 	    <script>
 	    	$("#useURL").click(function() { $("#useSSL").attr('disabled',false); $("#inputType").text("Server URL(http://www.test.com)");});
@@ -128,7 +121,7 @@
 		    		success: function(res) {
 		    			if(res) {
 		    				if(res['result'] === "fail") alert("서식이 맞지 않습니다.");
-		    				else alert("스캔을 시작합니다.");
+		    				else alert("스캔이 완료되었습니다.");
 		    			}
 		    		}
 		    	});

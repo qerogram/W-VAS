@@ -48,7 +48,7 @@
 				<div class="header"> 
 					<h1 class="page-header">List</h1>
 					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
+						<li><a href="../">Home</a></li>
 						<li class="active">List</li>
 					</ol>
 				</div>
@@ -83,13 +83,6 @@
 	    </div>
 	    <script src="assets/js/jquery-1.10.2.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/materialize/js/materialize.min.js"></script>
-	    <script src="assets/js/jquery.metisMenu.js"></script>
-	    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-	    <script src="assets/js/morris/morris.js"></script>
-		<script src="assets/js/easypiechart.js"></script>
-		<script src="assets/js/easypiechart-data.js"></script>
-		<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
 	    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 	    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
@@ -104,7 +97,7 @@
 	    		data : { },
 	    		dataType:'json',
 	    		success: function(result) {
-	    			var res = result['infor'];
+	    			var res = result['info'];
 	    			for(var i = 0 ; i < res.length; ++i) {
 	    				var tr_color = '<tr class="gradeA odd">';
 	    				if(i%2) tr_color = '<tr class="gradeA even">';
