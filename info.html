@@ -86,12 +86,7 @@
 	    <script src="assets/js/jquery-1.10.2.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
 	    <script src="assets/js/custom-scripts.js"></script> 
-	    <script>
-	    	function pad(n, width) {
-  				n = n + '';
-  				return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
-			}
-			
+	    <script>		
 	    	var vuln_list = ["File Download", "Directory Listing", "민감 정보 노출", "관리자 페이지 노출", "input 태그 문자열 길이 체크를 하지 않는가?"];
 	    	$.ajax({
 	    		url: "/load_target_info",
